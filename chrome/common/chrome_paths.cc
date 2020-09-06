@@ -37,9 +37,9 @@
 #include "base/win/registry.h"
 #endif
 
-#if defined(OS_LINUX) && BUILDFLAG(ENABLE_WIDEVINE)
+#if BUILDFLAG(ENABLE_WIDEVINE)
 #include "third_party/widevine/cdm/widevine_cdm_common.h"  // nogncheck
-#endif
+#endif // BUILDFLAG(ENABLE_WIDEVINE)
 
 namespace {
 
@@ -373,8 +373,8 @@ bool PathProvider(int key, base::FilePath* result) {
 #endif
       cur = cur.Append(FILE_PATH_LITERAL("pnacl"));
       break;
-
-#if defined(OS_LINUX) && BUILDFLAG(BUNDLE_WIDEVINE_CDM)
+d
+#if BUILDFLAG(BUNDLE_WIDEVINE_CDM)
     case chrome::DIR_BUNDLED_WIDEVINE_CDM:
       if (!GetComponentDirectory(&cur))
         return false;
@@ -384,7 +384,7 @@ bool PathProvider(int key, base::FilePath* result) {
       cur = cur.AppendASCII(kWidevineCdmBaseDirectory);
 #endif  // !defined(OS_CHROMEOS)
       break;
-#endif  // defined(OS_LINUX) && BUILDFLAG(BUNDLE_WIDEVINE_CDM)
+#endif  // BUILDFLAG(BUNDLE_WIDEVINE_CDM)
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS) && \
     BUILDFLAG(ENABLE_WIDEVINE_CDM_COMPONENT)
